@@ -1,6 +1,8 @@
-﻿namespace Entities.Concrete
+﻿using Core.Entity;
+
+namespace Entities.Concrete
 {
-    public class ProductRecord
+    public class ProductRecord:IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
