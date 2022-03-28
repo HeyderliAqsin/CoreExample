@@ -11,5 +11,6 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCategoryDal:EFEntityRepositoryBase<Category,T110Context>,ICategoryDal
     {
+
     }
 }
