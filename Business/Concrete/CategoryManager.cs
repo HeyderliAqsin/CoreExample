@@ -18,7 +18,7 @@ namespace Business.Concrete
             _dal = dal;
         }
 
-        public List<Category> GetAll()
+        public List<Category> GetCategories()
         {
             return _dal.GetAll(c=>!c.IsDeleted);
         }
@@ -38,6 +38,12 @@ namespace Business.Concrete
             _dal.Update(category);
         }
 
-
+        public void Delete(int? id)
+        {
+            if (id == null) return;
+            var category = _dal.Get(c => c.Id == id);
+            category.IsDeleted = true;
+            _dal.Update(category);
+        }
     }
 }

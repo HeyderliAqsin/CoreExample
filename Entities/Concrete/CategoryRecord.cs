@@ -12,6 +12,6 @@ namespace Entities.Concrete
         public int LanguageId { get; set; }
         public bool IsDeleted { get; set; }
         public int CategoryId { get; set; }
-        public virtual Category Category { get; set; }=null!;
+        public virtual Category? Category { get; set; }
     }
 }
