@@ -40,8 +40,8 @@ namespace Business.Concrete
 
         //public List<Product> SearchProducts(int? categoryId,decimal? minPrice,decimal? maxPrice)
         //{
-        //    return _dal.SearchProducts(categoryId,minPrice,maxPrice);
-        //}
+        //  return _dal.SearchProducts(categoryId,minPrice,maxPrice);
+        //}/
 
         public List<Product> GetProducts()
         {
