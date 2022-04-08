@@ -1,4 +1,5 @@
 ﻿using Entities.Concrete;
+using Entities.Concrete.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,8 @@ namespace Business.Abstract
         List<Product> GetProducts();
         Product GetProduct(int? id);
         List<Product> GetSale();
-        void Add(Product product);
-        void Update(Product product);
+        void Add(ProductDTO product);
+        void Update(int id,ProductDTO product);
         void Delete(int? id);
     }
 

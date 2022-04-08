@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.Concrete.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -33,16 +34,16 @@ namespace WebApi.Controllers
 
         // POST api/<ProductsController>
         [HttpPost]
-        public void Post([FromBody] Product pro)
+        public void Post([FromBody] ProductDTO pro)
         {
             _productService.Add(pro);
         }
 
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Product pro)
+        public void Put(int id, [FromBody] ProductDTO pro)
         {
-            _productService.Update(pro);
+            _productService.Update(id,pro);
 
         }
 

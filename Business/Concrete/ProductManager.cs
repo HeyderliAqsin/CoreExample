@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Concrete.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,16 @@ namespace Business.Concrete
             _dal = dal;
         }
 
-        public void Add(Product product)
+        public void Add(ProductDTO product)
         {
-            _dal.Add(product);
+            Product newProduct = new()
+            {
+                CategoryId = product.CategoryId,
+                Price = product.Price,
+                Discount = product.Discount,
+            };
+
+            _dal.Add(newProduct);
         }
         public void Delete(int? id)
         {
@@ -52,9 +60,13 @@ namespace Business.Concrete
             return _dal.GetAll(c => c.Discount > 0 && c.Discount != null && !c.IsDeleted);
         }
 
-        public void Update(Product product)
+        public void Update(int id,ProductDTO product)
         {
-            _dal.Update(product);
+           Product selectedPro = _dal.Get(c=> c.Id == id);   
+            selectedPro.Price=product.Price;
+            selectedPro.Discount=product.Discount; 
+            selectedPro.CategoryId=product.CategoryId;
+            _dal.Update(selectedPro);
         }
     }
 }
