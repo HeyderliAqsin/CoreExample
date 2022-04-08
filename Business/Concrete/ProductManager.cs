@@ -21,14 +21,7 @@ namespace Business.Concrete
 
         public void Add(ProductDTO product)
         {
-            Product newProduct = new()
-            {
-                CategoryId = product.CategoryId,
-                Price = product.Price,
-                Discount = product.Discount,
-            };
-
-            _dal.Add(newProduct);
+            _dal.AddProductWithLang(product);
         }
         public void Delete(int? id)
         {
@@ -52,7 +45,7 @@ namespace Business.Concrete
 
         public List<Product> GetProducts()
         {
-            return _dal.GetAll(c => !c.IsDeleted);
+            return _dal.GetAllWithInclude();
         }
 
         public List<Product> GetSale()
