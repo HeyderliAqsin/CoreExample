@@ -20,16 +20,16 @@ namespace WebApi.Controllers
 
         // GET: api/<ProductsController>
         [HttpGet("{lang}")]
-        public IEnumerable<Product> Get(string lang)
+        public IEnumerable<Product> Get(string? lang)
         {
-            return _productService.GetProducts();
+            return _productService.GetProducts(lang);
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}/{lang}")]
         public Product Get(int id,string lang)
         {
-            return _productService.GetProduct(id);
+            return _productService.GetProduct(id,lang);
         }
 
         // POST api/<ProductsController>
