@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,22 +29,28 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 Description = c.Description,
                 Name= c.Name,
-                LanguageId=c.LanguageId
+                LanguageKey=c.LanguageKey
             }));
             using T110Context context = new();
             context.Add(newProduct);
             context.SaveChanges();
         }
 
-        public List<Product> GetAllWithInclude()
+        public List<Product> GetAllWithInclude(Expression<Func<Product, bool>>? filters)
         {
             using T110Context context = new();
-            return context.Products
-                .Where(c=>!c.IsDeleted)
-                .Include(c=>c.ProductRecords)
-                .Include(c=>c.Category)
-                .ThenInclude(c=>c.CategoryRecords)
-                .ToList(); 
+            var products=context.Products
+                .Where(c => !c.IsDeleted)
+                .Include(c => c.ProductRecords)
+                .Include(c => c.Category)
+                .ThenInclude(c => c.CategoryRecords)
+                .AsQueryable();
+
+            if (filters != null)
+            {
+                products = products.Where(filters);
+            }
+            return products.ToList();
         }
 
         public List<Product> SearchProducts(int? categoryId, decimal? minPrice, decimal? maxPrice)

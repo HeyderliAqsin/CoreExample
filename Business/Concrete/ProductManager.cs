@@ -31,10 +31,10 @@ namespace Business.Concrete
             _dal.Update(product);
         }
 
-        public Product? GetProduct(int? id)
+        public Product? GetProduct(int? id,string? lang)
         {
             if(id==null) return null;
-            return _dal.Get(c => c.Id == id);
+            return _dal.Get(c => c.Id == id && c.ProductRecords.Any(c=>c.LanguageKey==lang));
         }
 
 
@@ -43,9 +43,9 @@ namespace Business.Concrete
         //  return _dal.SearchProducts(categoryId,minPrice,maxPrice);
         //}/
 
-        public List<Product> GetProducts()
+        public List<Product> GetProducts(string? lang)
         {
-            return _dal.GetAllWithInclude();
+            return _dal.GetAllWithInclude(c => c.ProductRecords.Any(c=>c.LanguageKey==lang));
         }
 
         public List<Product> GetSale()

@@ -19,15 +19,15 @@ namespace WebApi.Controllers
         }
 
         // GET: api/<ProductsController>
-        [HttpGet]
-        public IEnumerable<Product> Get()
+        [HttpGet("{lang}")]
+        public IEnumerable<Product> Get(string lang)
         {
             return _productService.GetProducts();
         }
 
         // GET api/<ProductsController>/5
-        [HttpGet("{id}")]
-        public Product Get(int id)
+        [HttpGet("{id}/{lang}")]
+        public Product Get(int id,string lang)
         {
             return _productService.GetProduct(id);
         }
@@ -43,6 +43,7 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] ProductDTO pro)
         {
+            //
             _productService.Update(id,pro);
 
         }
