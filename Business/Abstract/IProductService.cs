@@ -10,7 +10,7 @@ namespace Business.Abstract
 {
     public interface IProductService
     {
-        List<Product> GetProducts(string? lang);
+        Task<List<Product>> GetProducts(string? lang);
         Product GetProduct(int? id,string? lang);
         List<Product> GetSale();
         void Add(ProductDTO product);

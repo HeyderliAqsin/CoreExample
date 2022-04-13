@@ -12,7 +12,7 @@ namespace DataAccess.Abstract
 {
     public interface IProductDal:IEntityRepository<Product>
     {
-        List<Product> GetAllWithInclude(Expression<Func<Product, bool>>? filters);
+        Task<List<Product>> GetAllWithInclude(Expression<Func<Product, bool>>? filters);
         List<Product> SearchProducts(int? categoryId,decimal? minPrice,decimal? maxPrice);
         void AddProductWithLang(ProductDTO productDTO);
     }

@@ -36,7 +36,7 @@ namespace DataAccess.Concrete.EntityFramework
             context.SaveChanges();
         }
 
-        public List<Product> GetAllWithInclude(Expression<Func<Product, bool>>? filters)
+        public async Task<List<Product>> GetAllWithInclude(Expression<Func<Product, bool>>? filters)
         {
             using T110Context context = new();
             var products=context.Products
@@ -50,7 +50,7 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 products = products.Where(filters);
             }
-            return products.ToList();
+            return await products.ToListAsync();
         }
 
         public List<Product> SearchProducts(int? categoryId, decimal? minPrice, decimal? maxPrice)

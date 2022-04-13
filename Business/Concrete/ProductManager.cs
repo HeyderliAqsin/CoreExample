@@ -34,7 +34,7 @@ namespace Business.Concrete
         public Product? GetProduct(int? id,string? lang)
         {
             if(id==null) return null;
-            return _dal.Get(c => c.Id == id && c.ProductRecords.All(c=>c.LanguageKey==lang));
+            return _dal.Get(c => c.Id == id && c.ProductRecords.Any(c=>c.LanguageKey==lang));
         }
 
 
@@ -43,9 +43,9 @@ namespace Business.Concrete
         //  return _dal.SearchProducts(categoryId,minPrice,maxPrice);
         //}/
 
-        public List<Product> GetProducts(string? lang)
+        public async Task<List<Product>> GetProducts(string? lang)
         {
-            return _dal.GetAllWithInclude(c => c.ProductRecords.Any(c=>c.LanguageKey==lang));
+            return await _dal.GetAllWithInclude(c => c.ProductRecords.Any(c=>c.LanguageKey==lang));
         }
 
         public List<Product> GetSale()

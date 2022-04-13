@@ -20,9 +20,9 @@ namespace WebApi.Controllers
 
         // GET: api/<ProductsController>
         [HttpGet("{lang}")]
-        public IEnumerable<Product> Get(string? lang)
+        public async Task<IEnumerable<Product>> Get(string? lang)
         {
-            return _productService.GetProducts(lang);
+            return await _productService.GetProducts(lang);
         }
 
         // GET api/<ProductsController>/5
