@@ -36,12 +36,11 @@ namespace DataAccess.Concrete.EntityFramework
             context.SaveChanges();
         }
 
-        public async Task<List<Product>> GetAllWithInclude(Expression<Func<Product, bool>>? filters)
+        public async Task<List<Product>> GetAllWithInclude(Expression<Func<Product, bool>>? filters,string lang)
         {
             using T110Context context = new();
-            var products=context.Products
-                .Where(c => !c.IsDeleted)
-                .Include(c => c.ProductRecords)
+            var products = context.Products
+                .Include(c => c.ProductRecords.Where(c => c.LanguageKey == lang))
                 .Include(c => c.Category)
                 .ThenInclude(c => c.CategoryRecords)
                 .AsQueryable();
@@ -51,6 +50,17 @@ namespace DataAccess.Concrete.EntityFramework
                 products = products.Where(filters);
             }
             return await products.ToListAsync();
+        }
+
+        public Product GetByIdWithInclude(Expression<Func<Product, bool>> filters,string lang)
+        {
+            using T110Context context = new();
+            var product = context.Products
+                .Include(c => c.ProductRecords.Where(c=>c.LanguageKey==lang))
+                .Include(c => c.Category)
+                .ThenInclude(c => c.CategoryRecords)
+                .FirstOrDefault(filters);
+            return product;
         }
 
         public List<Product> SearchProducts(int? categoryId, decimal? minPrice, decimal? maxPrice)

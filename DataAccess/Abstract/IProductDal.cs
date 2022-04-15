@@ -12,7 +12,8 @@ namespace DataAccess.Abstract
 {
     public interface IProductDal:IEntityRepository<Product>
     {
-        Task<List<Product>> GetAllWithInclude(Expression<Func<Product, bool>>? filters);
+        Task<List<Product>> GetAllWithInclude(Expression<Func<Product, bool>>? filters,string lang);
+        Product GetByIdWithInclude(Expression<Func<Product, bool>>? filters,string lang);
         List<Product> SearchProducts(int? categoryId,decimal? minPrice,decimal? maxPrice);
         void AddProductWithLang(ProductDTO productDTO);
     }

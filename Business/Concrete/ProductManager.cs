@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class ProductManager:IProductService
+    public class ProductManager : IProductService
     {
         IProductDal _dal;
 
@@ -25,27 +25,22 @@ namespace Business.Concrete
         }
         public void Delete(int? id)
         {
-            if(id == null) return;
-           var product= _dal.Get(c => c.Id == id);
-           product.IsDeleted = true;
+            if (id == null) return;
+            var product = _dal.Get(c => c.Id == id);
+            product.IsDeleted = true;
             _dal.Update(product);
         }
 
-        public Product? GetProduct(int? id,string? lang)
+        public Product? GetProduct(int? id, string? lang)
         {
-            if(id==null) return null;
-            return _dal.Get(c => c.Id == id && c.ProductRecords.Any(c=>c.LanguageKey==lang));
+            if (id == null) return null;
+            return _dal.GetByIdWithInclude(c=>c.Id==id,lang);
         }
 
 
-        //public List<Product> SearchProducts(int? categoryId,decimal? minPrice,decimal? maxPrice)
-        //{
-        //  return _dal.SearchProducts(categoryId,minPrice,maxPrice);
-        //}/
-
         public async Task<List<Product>> GetProducts(string? lang)
         {
-            return await _dal.GetAllWithInclude(c => c.ProductRecords.Any(c=>c.LanguageKey==lang));
+            return await _dal.GetAllWithInclude(c=>!c.IsDeleted,lang);
         }
 
         public List<Product> GetSale()
@@ -53,12 +48,12 @@ namespace Business.Concrete
             return _dal.GetAll(c => c.Discount > 0 && c.Discount != null && !c.IsDeleted);
         }
 
-        public void Update(int id,ProductDTO product)
+        public void Update(int id, ProductDTO product)
         {
-           Product selectedPro = _dal.Get(c=> c.Id == id);   
-            selectedPro.Price=product.Price;
-            selectedPro.Discount=product.Discount; 
-            selectedPro.CategoryId=product.CategoryId;
+            Product selectedPro = _dal.Get(c => c.Id == id);
+            selectedPro.Price = product.Price;
+            selectedPro.Discount = product.Discount;
+            selectedPro.CategoryId = product.CategoryId;
             _dal.Update(selectedPro);
         }
     }
