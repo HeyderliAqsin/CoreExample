@@ -14,7 +14,7 @@ namespace DataAccess.Abstract
     {
         Task<List<Product>> GetAllWithInclude(Expression<Func<Product, bool>>? filters,string lang);
         Product GetByIdWithInclude(Expression<Func<Product, bool>>? filters,string lang);
-        List<Product> SearchProducts(int? categoryId,decimal? minPrice,decimal? maxPrice);
+        Task<List<Product>> SearchProducts(string? searchTerm,string langKey);
         void AddProductWithLang(ProductDTO productDTO);
     }
 }

@@ -13,6 +13,7 @@ namespace Business.Abstract
         Task<List<Product>> GetProducts(string? lang);
         Product GetProduct(int? id,string? lang);
         List<Product> GetSale();
+        Task<List<Product>> SearchProducts(string? searchTerm, string langKey);
         void Add(ProductDTO product);
         void Update(int id,ProductDTO product);
         void Delete(int? id);

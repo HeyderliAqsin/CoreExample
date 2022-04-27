@@ -19,18 +19,33 @@ namespace WebApi.Controllers
         }
 
         // GET: api/<ProductsController>
-        [HttpGet("{lang}")]
-        public async Task<IEnumerable<Product>> Get(string? lang)
+        //[HttpGet("{lang}")]
+        //public async Task<IEnumerable<Product>> Get(string? lang)
+        //{
+        //    return await _productService.GetProducts(lang);
+        //}
+
+        // GET: api/<ProductsController>
+        [HttpGet("{lang}/{searchTerm}")]
+        public async Task<JsonResult> Get(string lang,string? searchTerm)
         {
-            return await _productService.GetProducts(lang);
+            var result = new JsonResult(new { });
+            if (string.IsNullOrWhiteSpace(lang)) return result;
+            result.Value = new
+            {
+                success = true,
+                products = await _productService.SearchProducts(searchTerm: searchTerm, langKey: lang)
+            };
+
+            return result;
         }
 
         // GET api/<ProductsController>/5
-        [HttpGet("{id}/{lang}")]
-        public Product Get(int id,string lang)
-        {
-            return _productService.GetProduct(id,lang);
-        }
+        //[HttpGet("{id}/{lang}")]
+        //public Product Get(int id,string lang)
+        //{
+        //    return _productService.GetProduct(id,lang);
+        //}
 
         // POST api/<ProductsController>
         [HttpPost]

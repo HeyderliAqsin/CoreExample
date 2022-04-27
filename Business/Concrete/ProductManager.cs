@@ -48,6 +48,11 @@ namespace Business.Concrete
             return _dal.GetAll(c => c.Discount > 0 && c.Discount != null && !c.IsDeleted);
         }
 
+        public async Task<List<Product>> SearchProducts(string? searchTerm, string langKey="")
+        {
+            return await _dal.SearchProducts(searchTerm, langKey);
+        }
+
         public void Update(int id, ProductDTO product)
         {
             Product selectedPro = _dal.Get(c => c.Id == id);

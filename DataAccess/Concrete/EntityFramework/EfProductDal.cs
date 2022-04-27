@@ -63,24 +63,31 @@ namespace DataAccess.Concrete.EntityFramework
             return product;
         }
 
-        public List<Product> SearchProducts(int? categoryId, decimal? minPrice, decimal? maxPrice)
+        public async Task<List<Product>> SearchProducts(string? searchTerm,string langKey)
         {
             using T110Context context = new();
             var products = context.Products.AsQueryable();
-
-            if (categoryId.HasValue)
+            if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                products = products.Where(c => c.CategoryId == categoryId);
+                products = products
+                    .Include(c=>c.ProductRecords.Where(c=>c.LanguageKey==langKey))
+                    .Where(c => c.ProductRecords
+                  .Any(pr => pr.Name.ToUpper().Contains(searchTerm.ToUpper())));
             }
-            if (minPrice.HasValue && maxPrice.HasValue)
-            {
 
-                products = products.Where(c => (c.Discount != null && c.Discount > 0) ?
-                (c.Discount >= minPrice && c.Discount <= maxPrice) :
-                (c.Price >= minPrice && c.Price <= maxPrice)
-                );
-            }
-            return products.ToList();
+            //if (categoryId.HasValue)
+            //{
+            //    products = products.Where(c => c.CategoryId == categoryId);
+            //}
+            //if (minPrice.HasValue && maxPrice.HasValue)
+            //{
+
+            //    products = products.Where(c => (c.Discount != null && c.Discount > 0) ?
+            //    (c.Discount >= minPrice && c.Discount <= maxPrice) :
+            //    (c.Price >= minPrice && c.Price <= maxPrice)
+            //    );
+            //}
+            return await products.ToListAsync();
 
         }
     }
