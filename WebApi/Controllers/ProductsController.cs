@@ -1,6 +1,8 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using Entities.Concrete;
 using Entities.Concrete.DTOs;
+using Entities.Concrete.MyProfiles;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,18 +14,23 @@ namespace WebApi.Controllers
     public class ProductsController : ControllerBase
     {
         IProductService _productService;
+        private readonly IMapper _mapper;
 
-        public ProductsController(IProductService productService)
+
+        public ProductsController(IProductService productService, IMapper mapper)
         {
             _productService = productService;
+            _mapper = mapper;
         }
 
         // GET: api/<ProductsController>
-        //[HttpGet("{lang}")]
-        //public async Task<IEnumerable<Product>> Get(string? lang)
-        //{
-        //    return await _productService.GetProducts(lang);
-        //}
+        [HttpGet("{lang}")]
+        public async Task<IEnumerable<ProductListDTO>> Get(string? lang)
+        {
+            var productList=await _productService.GetProducts(lang);
+            var _mapperProduct = _mapper.Map<List<Product>,List<ProductListDTO>>(productList);
+            return _mapperProduct;
+        }
 
         // GET: api/<ProductsController>
         [HttpGet("{lang}/{searchTerm}")]

@@ -1,7 +1,9 @@
-﻿using Core.DataAccess.EntityFramework;
+﻿using Core.DataAccess;
+using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Concrete.DTOs;
+using Entities.Concrete.MyProfiles;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
