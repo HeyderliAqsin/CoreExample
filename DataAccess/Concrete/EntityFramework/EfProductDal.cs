@@ -27,12 +27,12 @@ namespace DataAccess.Concrete.EntityFramework
                 ProductRecords = new List<ProductRecord>()
             };
             
-            newProduct.ProductRecords.AddRange(productDTO.ProductRecords.Select(c => new ProductRecord()
-            {
-                Description = c.Description,
-                Name= c.Name,
-                LanguageKey=c.LanguageKey
-            }));
+            //newProduct.ProductRecords.AddRange(productDTO.ProductRecords.Select(c => new ProductRecord()
+            //{
+            //    Description = c.Description,
+            //    Name= c.Name,
+            //    LanguageKey=c.LanguageKey
+            //}));
             using T110Context context = new();
             context.Add(newProduct);
             context.SaveChanges();

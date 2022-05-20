@@ -13,10 +13,8 @@ namespace WebApi.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        IProductService _productService;
+        private readonly IProductService _productService;
         private readonly IMapper _mapper;
-
-
         public ProductsController(IProductService productService, IMapper mapper)
         {
             _productService = productService;
@@ -34,7 +32,7 @@ namespace WebApi.Controllers
 
         // GET: api/<ProductsController>
         [HttpGet("{lang}/{searchTerm}")]
-        public async Task<JsonResult> Get(string lang,string? searchTerm)
+        public async Task<JsonResult> Get(string lang, string? searchTerm)
         {
             var result = new JsonResult(new { });
             if (string.IsNullOrWhiteSpace(lang)) return result;
@@ -48,11 +46,13 @@ namespace WebApi.Controllers
         }
 
         // GET api/<ProductsController>/5
-        //[HttpGet("{id}/{lang}")]
-        //public Product Get(int id,string lang)
-        //{
-        //    return _productService.GetProduct(id,lang);
-        //}
+        [HttpGet("detail/{id}/{lang}")]    
+        public ProductDTO Get(int id, string lang)
+        {
+            var singleProduct = _productService.GetProduct(id, lang);
+            var _proMapper = _mapper.Map<ProductDTO>(singleProduct);
+            return _proMapper;
+        }
 
         // POST api/<ProductsController>
         [HttpPost]

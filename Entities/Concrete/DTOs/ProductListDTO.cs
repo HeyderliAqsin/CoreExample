@@ -9,10 +9,11 @@ namespace Entities.Concrete.DTOs
     public class ProductListDTO
     {
         public int Id { get; set; }
-        public decimal Price { get; set; }
+        public string Name { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public decimal Price { get; set; }  
         public decimal? Discount { get; set; }
         public int CategoryId { get; set; }
         public string CategoryName { get; set; } = null!;
-        public ProductRecord ProductRecords { get; set; }
     }
 }
