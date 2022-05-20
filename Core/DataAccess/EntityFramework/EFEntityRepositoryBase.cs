@@ -1,5 +1,4 @@
 ﻿using Core.Entity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,12 +6,13 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Core.DataAccess.EntityFramework
 {
     public class EFEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>
         where TEntity : class, IEntity, new()
-        where TContext : IdentityDbContext, new()
+        where TContext :  IdentityDbContext, new()
     {
         public void Add(TEntity entity)
         {
