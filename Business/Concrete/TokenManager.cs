@@ -30,7 +30,7 @@ namespace Business.Concrete
             var roles = await _userManager.GetRolesAsync(user);
             foreach (var role in roles)
             {
-                claims.Add(new Claim(ClaimTypes.Role,role));
+                claims.Add(new Claim("roles",role));
             }
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]));
             var creds=new SigningCredentials(key,SecurityAlgorithms.HmacSha256);

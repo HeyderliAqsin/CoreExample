@@ -41,7 +41,7 @@ namespace WebApi.Controllers
             }
             await _userManager.AddToRoleAsync(user, "Visitor");
 
-            return StatusCode(201);
+            return Ok(new {status=201,message="user created successfully"});    
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
@@ -55,7 +55,17 @@ namespace WebApi.Controllers
 
             var token = await tokenManager.GenerateToken(user);
 
-            return Ok(token);
+            var roles=await _userManager.GetRolesAsync(user);
+            if (!roles.Any()) {
+                return BadRequest();
+            }
+
+            if (roles.Any(c => c == "Admin"))
+            {
+                return Ok(new {isAdmin=true, email = user.Email, token });
+            }
+
+            return Ok(new {isAdmin=false,email=user.Email,token});
         }
     }
 }
