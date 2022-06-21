@@ -13,6 +13,7 @@ namespace Entities.Concrete.DTOs
         public int CategoryId { get; set; }
         public string CategoryName { get; set; } = null!;
         public decimal Price { get; set; }
+        public string Image { get; set; }
         public decimal? Discount { get; set; }
     }
 }

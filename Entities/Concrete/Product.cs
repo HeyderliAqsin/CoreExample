@@ -9,6 +9,7 @@ namespace Entities.Concrete
         public decimal Price { get; set; }
         public decimal? Discount { get; set; }
         public int CategoryId { get; set; }
+        public string Image { get; set; }
         public virtual Category? Category{ get; set; }
         public virtual List<ProductRecord> ProductRecords { get; set; } = null!;
         public bool IsDeleted { get; set; }
